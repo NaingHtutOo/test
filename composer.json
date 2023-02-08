@@ -1,0 +1,15 @@
+{
+    "name": "emu/tenkafuma_project",
+    "authors": [
+        {
+            "name": "Emu Mizuto"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Libs\\" : "_classes/Libs/",
+            "Helpers\\" : "_classes/Helpers/"
+        }
+    }
+}
