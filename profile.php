@@ -121,405 +121,59 @@ if( $auth->role_id === 1 ) {
             <div class="tab-content">
                 
                 <div id="all" class="tab-pane container active">
-                    <div class="container m-2 p-2 table-responsive-sm">
-                        <table class="table table-striped table-dark table-hover table-bordered">
-                            <tr>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Biography</th>
-                                <th class="text-center">Normal Skill</th>
-                                <th class="text-center">Ultimate Skill</th>
-                                <th class="text-center">Leader Skill</th>
-                                <th class="text-center">Rarity</th>
-                                <th class="text-center">Job</th>
-                                <th class="text-center">Attribute</th>
-                                <th class="text-center">Attack</th>
-                                <th class="text-center">Hp</th>
-                                <th class="text-center">...</th>
-                                <th class="text-center">
-                                    <?php if( $auth->role_id === 1 ) : ?>Buy
-                                    <?php else : ?>Edit
-                                    <?php endif ?>
-                                </th>
-                            </tr>
+                    <div class="container m-2 p-2">
+                        <div class="row">
                             <?php foreach( $rosters as $roster ) : ?>
-                                <tr>
-                                    <td class="text-center"><?= $roster->name ?></td>
-                                    <td class="text-start"><?= $roster->info ?></td>
-                                    <td class="text-start"><?= $roster->normal_skill ?></td>
-                                    <td class="text-start"><?= $roster->ultimate_skill ?></td>
-                                    <td class="text-start"><?= $roster->leader_skill ?></td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->rarity_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-warning\">SSR</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-success\">SR</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-primary\">R</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-white\">N</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php 
-                                            switch( $roster->job_id ) {
-                                                case 1: 
-                                                    echo "Attacker";
-                                                    break;
-                                                case 2: 
-                                                    echo "Defender";
-                                                    break;
-                                                case 3: 
-                                                    echo "Obstructer";
-                                                    break;
-                                                case 4: 
-                                                    echo "Supporter";
-                                                    break;
-                                                case 5:
-                                                    echo "Healer";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->attribute_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-danger\">
-                                                    <i class=\"fa-solid fa-fire me-2\"></i>Fire</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-primary\">
-                                                    <i class=\"fa-solid fa-water me-2\"></i>Water</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-success\">
-                                                    <i class=\"fa-solid fa-wind me-2\"></i>Wind</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-warning\">
-                                                    <i class=\"fa-solid fa-sun me-2\"></i>Light</span>";
-                                                    break;
-                                                case 5: 
-                                                    echo "<span style=\"color : darkblue\">
-                                                    <i class=\"fa-solid fa-moon me-2\"></i>Dark</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center"><?= $roster->attack ?></td>
-                                    <td class="text-center"><?= $roster->hp ?></td>
-                                    <td class="text-center" data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
-                                        <i class="fa-solid fa-eye me-2"></i>View Detail...
-                                    </td>
-                                    <td class="text-center">
-                                        <?php if( $auth->role_id === 1 ) :?>
-                                            <a href="#" class="btn btn-sm btn-outline-warning">Buy</a>
-                                        <?php else : ?>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <?php endif ?>
-                                    </td>
-                                </tr>    
+                                <div class="text-center col-12 col-lg-3">
+                                    <div class="card mb-3" 
+                                        data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
+                                        <div class="card-body">
+                                            <img src="_actions/rosters/<?= $roster->photo ?>" alt="<?= $roster->name ?>" 
+                                            class="w-100 h-90 mb-2"/>
+                                            <span class="h3 text-primary"><?= $roster->name ?></span>
+                                        </div>
+                                    </div>
+                                </div>    
                             <?php endforeach ?>
-                        </table>
+                        </div>
                     </div>
                 </div>
                 
-                <div id="owned" class="tab-pane container fade"><div class="container m-2 p-2 table-responsive-sm">
-                        <table class="table table-striped table-dark table-hover table-bordered">
-                            <tr>
-                                <th class="text-center">Name
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Biography</th>
-                                <th class="text-center">Normal Skill</th>
-                                <th class="text-center">Ultimate Skill</th>
-                                <th class="text-center">Leader Skill</th>
-                                <th class="text-center">Rarity
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Job
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Attribute
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Attack
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Hp
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">...</th>
-                            </tr>
+                <div id="owned" class="tab-pane container fade">
+                    <div class="container m-2 p-2">
+                        <div class="row">
                             <?php foreach( $own as $roster ) : ?>
-                                <tr>
-                                    <td class="text-center"><?= $roster->name ?></td>
-                                    <td class="text-start"><?= $roster->info ?></td>
-                                    <td class="text-start"><?= $roster->normal_skill ?></td>
-                                    <td class="text-start"><?= $roster->ultimate_skill ?></td>
-                                    <td class="text-start"><?= $roster->leader_skill ?></td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->rarity_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-warning\">SSR</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-success\">SR</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-primary\">R</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-white\">N</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php 
-                                            switch( $roster->job_id ) {
-                                                case 1: 
-                                                    echo "Attacker";
-                                                    break;
-                                                case 2: 
-                                                    echo "Defender";
-                                                    break;
-                                                case 3: 
-                                                    echo "Obstructer";
-                                                    break;
-                                                case 4: 
-                                                    echo "Supporter";
-                                                    break;
-                                                case 5:
-                                                    echo "Healer";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->attribute_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-danger\">
-                                                    <i class=\"fa-solid fa-fire me-2\"></i>Fire</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-primary\">
-                                                    <i class=\"fa-solid fa-water me-2\"></i>Water</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-success\">
-                                                    <i class=\"fa-solid fa-wind me-2\"></i>Wind</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-warning\">
-                                                    <i class=\"fa-solid fa-sun me-2\"></i>Light</span>";
-                                                    break;
-                                                case 5: 
-                                                    echo "<span style=\"color : darkblue\">
-                                                    <i class=\"fa-solid fa-moon me-2\"></i>Dark</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center"><?= $roster->attack ?></td>
-                                    <td class="text-center"><?= $roster->hp ?></td>
-                                    <td class="text-center" data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
-                                        <i class="fa-solid fa-eye me-2"></i>View Detail...
-                                    </td>
-                                </tr>    
+                                <div class="text-center col-12 col-lg-3">
+                                    <div class="card mb-3" 
+                                    data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
+                                        <div class="card-body">
+                                            <img src="_actions/rosters/<?= $roster->photo ?>" alt="<?= $roster->name ?>" 
+                                            class="w-100 h-90 mb-2"/>
+                                            <span class="h3 text-primary"><?= $roster->name ?></span>
+                                        </div>
+                                    </div>
+                                </div>
                             <?php endforeach ?>
-                        </table>
+                        </div>
                     </div>
                 </div>
                 
-                <div id="lacked" class="tab-pane container fade"><div class="container m-2 p-2 table-responsive-sm">
-                        <table class="table table-striped table-dark table-hover table-bordered">
-                            <tr>
-                                <th class="text-center">Name
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Biography</th>
-                                <th class="text-center">Normal Skill</th>
-                                <th class="text-center">Ultimate Skill</th>
-                                <th class="text-center">Leader Skill</th>
-                                <th class="text-center">Rarity
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Job
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Attribute
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Attack
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">Hp
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-up"></i>
-                                    </a>
-                                    <a href="#" class="text-end text-light btn d-none">
-                                        <i class="fa-solid fa-sort-down"></i>
-                                    </a>
-                                </th>
-                                <th class="text-center">...</th>
-                                <th class="text-center">
-                                    <?php if( $auth->role_id === 1 ) : ?>Buy
-                                    <?php else : ?>Edit
-                                    <?php endif ?>
-                                </th>
-                            </tr>
+                <div id="lacked" class="tab-pane container fade">
+                    <div class="container m-2 p-2">
+                        <div class="row">
                             <?php foreach( $lack as $roster ) : ?>
-                                <tr>
-                                    <td class="text-center"><?= $roster->name ?></td>
-                                    <td class="text-start"><?= $roster->info ?></td>
-                                    <td class="text-start"><?= $roster->normal_skill ?></td>
-                                    <td class="text-start"><?= $roster->ultimate_skill ?></td>
-                                    <td class="text-start"><?= $roster->leader_skill ?></td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->rarity_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-warning\">SSR</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-success\">SR</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-primary\">R</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-white\">N</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center">
-                                        <?php 
-                                            switch( $roster->job_id ) {
-                                                case 1: 
-                                                    echo "Attacker";
-                                                    break;
-                                                case 2: 
-                                                    echo "Defender";
-                                                    break;
-                                                case 3: 
-                                                    echo "Obstructer";
-                                                    break;
-                                                case 4: 
-                                                    echo "Supporter";
-                                                    break;
-                                                case 5:
-                                                    echo "Healer";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center fw-bolder fst-italic">
-                                        <?php 
-                                            switch( $roster->attribute_id ) {
-                                                case 1: 
-                                                    echo "<span class=\"text-danger\">
-                                                    <i class=\"fa-solid fa-fire me-2\"></i>Fire</span>";
-                                                    break;
-                                                case 2: 
-                                                    echo "<span class=\"text-primary\">
-                                                    <i class=\"fa-solid fa-water me-2\"></i>Water</span>";
-                                                    break;
-                                                case 3: 
-                                                    echo "<span class=\"text-success\">
-                                                    <i class=\"fa-solid fa-wind me-2\"></i>Wind</span>";
-                                                    break;
-                                                case 4: 
-                                                    echo "<span class=\"text-warning\">
-                                                    <i class=\"fa-solid fa-sun me-2\"></i>Light</span>";
-                                                    break;
-                                                case 5: 
-                                                    echo "<span style=\"color : darkblue\">
-                                                    <i class=\"fa-solid fa-moon me-2\"></i>Dark</span>";
-                                                    break;
-                                            }
-                                        ?>
-                                    </td>
-                                    <td class="text-center"><?= $roster->attack ?></td>
-                                    <td class="text-center"><?= $roster->hp ?></td>
-                                    <td class="text-center" data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
-                                        <i class="fa-solid fa-eye me-2"></i>View Detail...
-                                    </td>
-                                    <td class="text-center">
-                                        <?php if( $auth->role_id === 1 ) :?>
-                                            <a href="#" class="btn btn-sm btn-outline-warning">Buy</a>
-                                        <?php else : ?>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
-                                        <?php endif ?>
-                                    </td>
-                                </tr>    
+                                <div class="text-center col-12 col-lg-3">
+                                    <div class="card mb-3" 
+                                    data-bs-toggle="modal" data-bs-target="#roster<?= $roster->id ?>">
+                                        <div class="card-body">
+                                            <img src="_actions/rosters/<?= $roster->photo ?>" alt="<?= $roster->name ?>" 
+                                            class="w-100 h-90 mb-2"/>
+                                            <span class="h3 text-primary"><?= $roster->name ?></span>
+                                        </div>
+                                    </div>
+                                </div>
                             <?php endforeach ?>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
